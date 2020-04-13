@@ -1,6 +1,7 @@
 <template>
   <div class="tracker-container">
     <div class="tracker">
+      <task-search />
       <time-entry
         v-for="(entry, index) in parsedTimers"
         :key="index"
@@ -16,12 +17,14 @@
 <script>
 import Options from "@/components/Options";
 import TimeEntry from "@/components/TimeEntry";
+import TaskSearch from "@/components/TaskSearch";
 import { ModalProgrammatic } from "buefy";
 import { mapGetters } from "vuex";
 export default {
   name: "Tracker",
   components: {
-    TimeEntry
+    TimeEntry,
+    TaskSearch
   },
   methods: {
     openOptionsModal() {

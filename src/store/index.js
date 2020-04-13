@@ -6,13 +6,16 @@ const SET_TIMERS = "SET_TIMERS";
 const SET_INCLUDED = "SET_INCLUDED";
 const UPDATE_API_KEY = "UPDATE_API_KEY";
 const UPDATE_TEAMWORK_DOMAIN = "UPDATE_TEAMWORK_DOMAIN";
-
+const UPDATE_INCLUDE_COMPLETED_ITEMS = "UPDATE_INCLUDE_COMPLETED_ITEMS";
+const UPDATE_INCLUDE_ARCHIVE_PROJECTS = "UPDATE_INCLUDE_ARCHIVE_PROJECTS";
 Vue.use(Vuex);
 
 const state = {
   options: {
     teamworkDomain: "",
-    apiKey: ""
+    apiKey: "",
+    includeCompletedItems: true,
+    includeArchiveProjects: false
   },
   timers: [],
   included: null
@@ -24,6 +27,12 @@ const mutations = {
   },
   [UPDATE_API_KEY](state, value) {
     state.options.apiKey = value;
+  },
+  [UPDATE_INCLUDE_COMPLETED_ITEMS](state, value) {
+    state.options.includeCompletedItems = value;
+  },
+  [UPDATE_INCLUDE_ARCHIVE_PROJECTS](state, value) {
+    state.options.includeArchiveProjects = value;
   },
   [SET_TIMERS](state, timers) {
     state.timers = timers;

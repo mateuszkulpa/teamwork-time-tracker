@@ -29,6 +29,9 @@ $link-focus-border: $primary;
 // Fonts
 $family-primary: 'Quicksand', sans-serif;
 
+// dropdown 
+$dropdown-content-max-height: 75vh;
+
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";

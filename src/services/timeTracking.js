@@ -25,9 +25,17 @@ export function resume(timerId) {
   });
 }
 
-export function update(timerId) {
+export function complete(timerId) {
   return request({
-    url: `me/timers/${timerId}.json`,
+    url: `me/timers/${timerId}/complete.json`,
     method: METHODS.PUT
+  });
+}
+
+export function update(payload) {
+  return request({
+    url: `me/timers/${payload.timerId}.json`,
+    method: METHODS.PUT,
+    data: payload
   });
 }
