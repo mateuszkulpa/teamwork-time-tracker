@@ -1,14 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import { allRunningTimers } from "@/services/timeTracking";
+import { allRunningTimers, create } from "@/services/timeTracking";
+
+Vue.use(Vuex);
+
 const SET_TIMERS = "SET_TIMERS";
 const SET_INCLUDED = "SET_INCLUDED";
 const UPDATE_API_KEY = "UPDATE_API_KEY";
 const UPDATE_TEAMWORK_DOMAIN = "UPDATE_TEAMWORK_DOMAIN";
 const UPDATE_INCLUDE_COMPLETED_ITEMS = "UPDATE_INCLUDE_COMPLETED_ITEMS";
 const UPDATE_INCLUDE_ARCHIVE_PROJECTS = "UPDATE_INCLUDE_ARCHIVE_PROJECTS";
-Vue.use(Vuex);
 
 const state = {
   options: {
@@ -47,6 +49,17 @@ const actions = {
     const response = await allRunningTimers();
     commit(SET_TIMERS, response.timers);
     commit(SET_INCLUDED, response.included);
+  },
+  async createEntry({ dispatch }, { id, projectId }) {
+    const payload = {
+      timer: {
+        taskId: id,
+        projectId,
+        isBillable: true
+      }
+    };
+    await create(payload);
+    dispatch("fetchTimers");
   }
 };
 

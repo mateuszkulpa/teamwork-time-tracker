@@ -58,11 +58,11 @@ export default {
 
   methods: {
     async pause() {
-      await pause(this.entry.id);
+      await pause(this.entry);
       this.$store.dispatch("fetchTimers");
     },
     async resume() {
-      await resume(this.entry.id);
+      await resume(this.entry);
       this.$store.dispatch("fetchTimers");
     }
   }

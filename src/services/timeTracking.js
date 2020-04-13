@@ -11,23 +11,30 @@ export function allRunningTimers() {
   });
 }
 
-export function pause(timerId) {
+export function create(payload) {
   return request({
-    url: `/me/timers/${timerId}/pause.json`,
+    url: `/me/timers.json`,
+    method: METHODS.POST,
+    data: payload
+  });
+}
+export function pause({ id }) {
+  return request({
+    url: `/me/timers/${id}/pause.json`,
     method: METHODS.PUT
   });
 }
 
-export function resume(timerId) {
+export function resume({ id }) {
   return request({
-    url: `/me/timers/${timerId}/resume.json`,
+    url: `/me/timers/${id}/resume.json`,
     method: METHODS.PUT
   });
 }
 
-export function complete(timerId) {
+export function complete({ id }) {
   return request({
-    url: `me/timers/${timerId}/complete.json`,
+    url: `me/timers/${id}/complete.json`,
     method: METHODS.PUT
   });
 }
@@ -37,5 +44,12 @@ export function update(payload) {
     url: `me/timers/${payload.timerId}.json`,
     method: METHODS.PUT,
     data: payload
+  });
+}
+
+export function remove({ id }) {
+  return request({
+    url: `me/timers/${id}.json`,
+    method: METHODS.DELETE
   });
 }
