@@ -64,7 +64,7 @@ const actions = {
 };
 
 const getters = {
-  parsedTimers: state => {
+  parsedTimers(state) {
     return state.timers.map(entry => {
       let result = Object.assign({}, entry);
       if (state.included) {
@@ -75,6 +75,9 @@ const getters = {
       }
       return result;
     });
+  },
+  isRequiredOptionsEntered(state) {
+    return state.options.teamworkDomain && state.options.apiKey;
   }
 };
 

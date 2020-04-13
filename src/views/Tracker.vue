@@ -2,6 +2,14 @@
   <div class="tracker-container">
     <div class="tracker">
       <task-search />
+
+      <div
+        class="has-text-danger has-text-centered"
+        v-if="!isRequiredOptionsEntered"
+      >
+        Provide TeamWork domain and API KEY and reload page
+      </div>
+
       <div class="tracker__entries" ref="trackerEntries">
         <time-entry
           v-for="(entry, index) in parsedTimers"
@@ -10,9 +18,11 @@
         />
       </div>
 
-      <b-button class="is-white" @click="openOptionsModal">
-        <b-icon pack="fas" icon="sliders-h"></b-icon>
-      </b-button>
+      <div>
+        <b-button class="is-white" @click="openOptionsModal">
+          <b-icon pack="fas" icon="cogs"></b-icon>
+        </b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -38,7 +48,7 @@ export default {
     }
   },
   async mounted() {
-    console.log(this.$refs.trackerEntries);
+    if (!this.isRequiredOptionsEntered) return;
     const loadingComponent = this.$buefy.loading.open({
       container: this.$refs.trackerEntries
     });
@@ -46,7 +56,7 @@ export default {
     loadingComponent.close();
   },
   computed: {
-    ...mapGetters(["parsedTimers"])
+    ...mapGetters(["parsedTimers", "isRequiredOptionsEntered"])
   }
 };
 </script>

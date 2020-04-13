@@ -6,6 +6,7 @@
           <b-icon pack="fas" icon="ellipsis-v" type="is-info"></b-icon>
         </button>
 
+        <b-dropdown-item @click="complete">Complete</b-dropdown-item>
         <b-dropdown-item @click="collapsed = !collapsed">
           <span v-if="collapsed">Show</span>
           <span v-else>Hide</span>
@@ -56,7 +57,13 @@
 <script>
 import IntervalEntry from "@/components/IntervalEntry";
 import EntryTotal from "@/components/EntryTotal";
-import { resume, pause, remove, update } from "@/services/timeTracking";
+import {
+  resume,
+  pause,
+  remove,
+  update,
+  complete
+} from "@/services/timeTracking";
 import debounce from "lodash.debounce";
 
 export default {
@@ -89,6 +96,10 @@ export default {
           this.$store.dispatch("fetchTimers");
         }
       });
+    },
+    async complete() {
+      await complete(this.entry);
+      this.$store.dispatch("fetchTimers");
     },
     update: debounce(async function() {
       update(this.entry);
