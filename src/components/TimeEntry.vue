@@ -58,7 +58,7 @@ import IntervalEntry from "@/components/IntervalEntry";
 import EntryTotal from "@/components/EntryTotal";
 import { resume, pause, remove, update } from "@/services/timeTracking";
 import debounce from "lodash.debounce";
-console.log(debounce);
+
 export default {
   components: { IntervalEntry, EntryTotal },
   props: {
@@ -91,7 +91,6 @@ export default {
       });
     },
     update: debounce(async function() {
-      console.log("xxxxxxx");
       update(this.entry);
     }, 1000)
   }
