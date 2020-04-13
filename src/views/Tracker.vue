@@ -2,11 +2,14 @@
   <div class="tracker-container">
     <div class="tracker">
       <task-search />
-      <time-entry
-        v-for="(entry, index) in parsedTimers"
-        :key="index"
-        :entry="entry"
-      />
+      <div class="tracker__entries" ref="trackerEntries">
+        <time-entry
+          v-for="(entry, index) in parsedTimers"
+          :key="index"
+          :entry="entry"
+        />
+      </div>
+
       <b-button class="is-white" @click="openOptionsModal">
         <b-icon pack="fas" icon="sliders-h"></b-icon>
       </b-button>
@@ -34,8 +37,13 @@ export default {
       });
     }
   },
-  mounted() {
-    this.$store.dispatch("fetchTimers");
+  async mounted() {
+    console.log(this.$refs.trackerEntries);
+    const loadingComponent = this.$buefy.loading.open({
+      container: this.$refs.trackerEntries
+    });
+    await this.$store.dispatch("fetchTimers");
+    loadingComponent.close();
   },
   computed: {
     ...mapGetters(["parsedTimers"])
@@ -64,6 +72,11 @@ export default {
     max-width: $desktop;
     border-radius: $radius;
     min-height: unset;
+  }
+
+  &__entries {
+    position: relative;
+    min-height: 3 * $gap;
   }
 }
 </style>

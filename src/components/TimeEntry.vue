@@ -22,8 +22,10 @@
         {{ entry.task.name }}
       </div>
       <textarea
+        v-auto-resize
         class="time-entry__description"
         v-model="entry.description"
+        @input="update"
       ></textarea>
     </div>
     <div class="time-entry__actions">
@@ -54,8 +56,9 @@
 <script>
 import IntervalEntry from "@/components/IntervalEntry";
 import EntryTotal from "@/components/EntryTotal";
-import { resume, pause, remove } from "@/services/timeTracking";
-
+import { resume, pause, remove, update } from "@/services/timeTracking";
+import debounce from "lodash.debounce";
+console.log(debounce);
 export default {
   components: { IntervalEntry, EntryTotal },
   props: {
@@ -69,7 +72,6 @@ export default {
       collapsed: true
     };
   },
-
   methods: {
     async pause() {
       await pause(this.entry);
@@ -87,7 +89,11 @@ export default {
           this.$store.dispatch("fetchTimers");
         }
       });
-    }
+    },
+    update: debounce(async function() {
+      console.log("xxxxxxx");
+      update(this.entry);
+    }, 1000)
   }
 };
 </script>
@@ -130,10 +136,11 @@ export default {
     border: none;
     background: none;
     width: 100%;
-    resize: vertical;
+    resize: none;
     overflow: hidden;
     &:focus {
       outline: none;
+      border-bottom: 2px solid $primary;
     }
   }
   &__actions {

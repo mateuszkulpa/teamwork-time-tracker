@@ -7,6 +7,7 @@ import Buefy from "buefy";
 import VueCompositionApi from "@vue/composition-api";
 import "@/styles/main.scss";
 import "@/utils/filters";
+import "@/utils/directives";
 Vue.config.productionTip = false;
 
 Vue.use(VueCompositionApi);

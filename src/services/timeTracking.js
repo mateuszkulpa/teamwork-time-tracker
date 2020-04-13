@@ -41,9 +41,9 @@ export function complete({ id }) {
 
 export function update(payload) {
   return request({
-    url: `me/timers/${payload.timerId}.json`,
+    url: `me/timers/${payload.id}.json`,
     method: METHODS.PUT,
-    data: payload
+    data: { timer: payload }
   });
 }
 

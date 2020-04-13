@@ -79,7 +79,11 @@ const getters = {
 };
 
 export default new Vuex.Store({
-  plugins: [createPersistedState()],
+  plugins: [
+    createPersistedState({
+      paths: ["options"]
+    })
+  ],
   state,
   mutations,
   actions,
