@@ -1,8 +1,6 @@
 import Vue from "vue";
 
 function resize(el) {
-  console.log(el.height);
-  console.log(el.scrollHeight);
   el.style.height = "auto";
   el.style.height = el.scrollHeight + 1 + "px";
 }
