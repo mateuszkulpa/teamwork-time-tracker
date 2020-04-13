@@ -1,10 +1,24 @@
 <template>
   <div class="time-entry">
+    <div class="time-entry__options">
+      <b-dropdown>
+        <button class="button is-white" slot="trigger">
+          <b-icon pack="fas" icon="ellipsis-v" type="is-info"></b-icon>
+        </button>
+
+        <b-dropdown-item @click="collapsed = !collapsed">
+          <span v-if="collapsed">Show</span>
+          <span v-else>Hide</span>
+          intervals
+        </b-dropdown-item>
+        <b-dropdown-item @click="remove">Delete</b-dropdown-item>
+      </b-dropdown>
+    </div>
     <div class="time-entry__info">
       <div class="time-entry__project">
         {{ entry.project.name }}
       </div>
-      <div class="time-entry__task" @click="collapsed = !collapsed">
+      <div class="time-entry__task">
         {{ entry.task.name }}
       </div>
       <textarea
@@ -40,7 +54,7 @@
 <script>
 import IntervalEntry from "@/components/IntervalEntry";
 import EntryTotal from "@/components/EntryTotal";
-import { resume, pause } from "@/services/timeTracking";
+import { resume, pause, remove } from "@/services/timeTracking";
 
 export default {
   components: { IntervalEntry, EntryTotal },
@@ -64,6 +78,15 @@ export default {
     async resume() {
       await resume(this.entry);
       this.$store.dispatch("fetchTimers");
+    },
+    async remove() {
+      this.$buefy.dialog.confirm({
+        message: "Are you sure to delete this time entry?",
+        onConfirm: async () => {
+          await remove(this.entry);
+          this.$store.dispatch("fetchTimers");
+        }
+      });
     }
   }
 };
@@ -71,6 +94,7 @@ export default {
 
 <style lang="scss" scoped>
 .time-entry {
+  position: relative;
   border: 1px solid rgba($primary, 0.25);
   border-radius: $radius;
   padding: 0.25 * $gap;
@@ -78,6 +102,15 @@ export default {
   flex-wrap: wrap;
   margin-bottom: 0.5 * $gap;
 
+  &__options {
+    display: flex;
+    align-items: center;
+    @include mobile() {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
   &__info {
     flex: 1;
     @include mobile() {
@@ -89,7 +122,6 @@ export default {
   }
   &__task {
     font-weight: $weight-bold;
-    cursor: pointer;
   }
   &__description {
     font-size: $size-7;

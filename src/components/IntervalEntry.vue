@@ -19,7 +19,6 @@ export default {
 <style lang="scss" scoped>
 .interval-entry {
   text-align: right;
-  font-size: $size-7;
   color: $grey;
   font-family: $family-monospace;
 }
