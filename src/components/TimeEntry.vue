@@ -16,12 +16,20 @@
       </b-dropdown>
     </div>
     <div class="time-entry__info">
-      <div class="time-entry__project">
+      <a
+        class="time-entry__project"
+        :href="`${options.teamworkDomain}/#/projects/${entry.project.id}`"
+        target="_blank"
+      >
         {{ entry.project.name }}
-      </div>
-      <div class="time-entry__task">
+      </a>
+      <a
+        class="time-entry__task"
+        :href="`${options.teamworkDomain}/#/tasks/${entry.task.id}`"
+        target="_blank"
+      >
         {{ entry.task.name }}
-      </div>
+      </a>
       <textarea
         v-auto-resize
         class="time-entry__description"
@@ -65,6 +73,7 @@ import {
   complete
 } from "@/services/timeTracking";
 import debounce from "lodash.debounce";
+import { mapState } from "vuex";
 
 export default {
   components: { IntervalEntry, EntryTotal },
@@ -78,6 +87,9 @@ export default {
     return {
       collapsed: true
     };
+  },
+  computed: {
+    ...mapState(["options"])
   },
   methods: {
     async pause() {
@@ -134,10 +146,14 @@ export default {
     }
   }
   &__project {
+    display: block;
     font-size: $size-7;
+    color: $black;
   }
   &__task {
+    display: block;
     font-weight: $weight-bold;
+    color: $black;
   }
   &__description {
     font-size: $size-7;

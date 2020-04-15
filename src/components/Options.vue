@@ -1,5 +1,11 @@
 <template>
   <section class="section has-background-white">
+    <b-field label="CORS Proxy">
+      <b-input
+        v-model="corsProxy"
+        placeholder="enter your proxy if your TeamWork CORS is not enabled"
+      ></b-input>
+    </b-field>
     <b-field label="Teamwork domain">
       <b-input v-model="teamworkDomain"></b-input>
     </b-field>
@@ -22,6 +28,14 @@
 <script>
 export default {
   computed: {
+    corsProxy: {
+      get() {
+        return this.$store.state.options.corsProxy;
+      },
+      set(value) {
+        this.$store.commit("UPDATE_CORS_PROXY", value);
+      }
+    },
     teamworkDomain: {
       get() {
         return this.$store.state.options.teamworkDomain;

@@ -8,12 +8,14 @@ Vue.use(Vuex);
 const SET_TIMERS = "SET_TIMERS";
 const SET_INCLUDED = "SET_INCLUDED";
 const UPDATE_API_KEY = "UPDATE_API_KEY";
+const UPDATE_CORS_PROXY = "UPDATE_CORS_PROXY";
 const UPDATE_TEAMWORK_DOMAIN = "UPDATE_TEAMWORK_DOMAIN";
 const UPDATE_INCLUDE_COMPLETED_ITEMS = "UPDATE_INCLUDE_COMPLETED_ITEMS";
 const UPDATE_INCLUDE_ARCHIVE_PROJECTS = "UPDATE_INCLUDE_ARCHIVE_PROJECTS";
 
 const state = {
   options: {
+    corsProxy: "",
     teamworkDomain: "",
     apiKey: "",
     includeCompletedItems: true,
@@ -24,6 +26,9 @@ const state = {
 };
 
 const mutations = {
+  [UPDATE_CORS_PROXY](state, value) {
+    state.options.corsProxy = value;
+  },
   [UPDATE_TEAMWORK_DOMAIN](state, value) {
     state.options.teamworkDomain = value;
   },
