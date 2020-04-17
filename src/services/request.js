@@ -8,7 +8,6 @@ service.interceptors.request.use(
     config.baseURL = store.state.options.teamworkDomain;
     if (store.state.options.corsProxy)
       config.baseURL = `${store.state.options.corsProxy}/${config.baseURL}`;
-    console.log(config.baseURL);
     config.headers = {
       Authorization: "Basic " + btoa(store.state.options.apiKey)
     };
