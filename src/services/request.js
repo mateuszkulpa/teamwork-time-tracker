@@ -5,9 +5,10 @@ const service = axios.create({});
 
 service.interceptors.request.use(
   async config => {
+    if (!store.getters.options.teamworkDomain)
+      throw new Error("No teamwork domain provided");
+
     config.baseURL = store.state.options.teamworkDomain;
-    if (store.state.options.corsProxy)
-      config.baseURL = `${store.state.options.corsProxy}/${config.baseURL}`;
     config.headers = {
       Authorization: "Basic " + btoa(store.state.options.apiKey)
     };

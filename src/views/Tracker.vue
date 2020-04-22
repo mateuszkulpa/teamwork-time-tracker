@@ -5,9 +5,9 @@
 
       <div
         class="has-text-danger has-text-centered"
-        v-if="!isRequiredOptionsEntered"
+        v-if="!isRequiredOptionsProvided"
       >
-        Provide TeamWork domain and API KEY and reload page
+        Provide TeamWork domain and API KEY
       </div>
 
       <div class="tracker__entries" ref="trackerEntries">
@@ -33,6 +33,7 @@ import TimeEntry from "@/components/TimeEntry";
 import TaskSearch from "@/components/TaskSearch";
 import { ModalProgrammatic } from "buefy";
 import { mapGetters } from "vuex";
+
 export default {
   name: "Tracker",
   components: {
@@ -48,7 +49,7 @@ export default {
     }
   },
   async mounted() {
-    if (!this.isRequiredOptionsEntered) return;
+    if (!this.isRequiredOptionsProvided) return;
     const loadingComponent = this.$buefy.loading.open({
       container: this.$refs.trackerEntries
     });
@@ -56,7 +57,7 @@ export default {
     loadingComponent.close();
   },
   computed: {
-    ...mapGetters(["parsedTimers", "isRequiredOptionsEntered"])
+    ...mapGetters(["parsedTimers", "isRequiredOptionsProvided"])
   }
 };
 </script>

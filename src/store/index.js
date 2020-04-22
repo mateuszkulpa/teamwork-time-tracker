@@ -7,15 +7,9 @@ Vue.use(Vuex);
 
 const SET_TIMERS = "SET_TIMERS";
 const SET_INCLUDED = "SET_INCLUDED";
-const UPDATE_API_KEY = "UPDATE_API_KEY";
-const UPDATE_CORS_PROXY = "UPDATE_CORS_PROXY";
-const UPDATE_TEAMWORK_DOMAIN = "UPDATE_TEAMWORK_DOMAIN";
-const UPDATE_INCLUDE_COMPLETED_ITEMS = "UPDATE_INCLUDE_COMPLETED_ITEMS";
-const UPDATE_INCLUDE_ARCHIVE_PROJECTS = "UPDATE_INCLUDE_ARCHIVE_PROJECTS";
-
+const SET_OPTIONS = "SET_OPTIONS";
 const state = {
   options: {
-    corsProxy: "",
     teamworkDomain: "",
     apiKey: "",
     includeCompletedItems: true,
@@ -26,20 +20,8 @@ const state = {
 };
 
 const mutations = {
-  [UPDATE_CORS_PROXY](state, value) {
-    state.options.corsProxy = value;
-  },
-  [UPDATE_TEAMWORK_DOMAIN](state, value) {
-    state.options.teamworkDomain = value;
-  },
-  [UPDATE_API_KEY](state, value) {
-    state.options.apiKey = value;
-  },
-  [UPDATE_INCLUDE_COMPLETED_ITEMS](state, value) {
-    state.options.includeCompletedItems = value;
-  },
-  [UPDATE_INCLUDE_ARCHIVE_PROJECTS](state, value) {
-    state.options.includeArchiveProjects = value;
+  [SET_OPTIONS](state, options) {
+    state.options = options;
   },
   [SET_TIMERS](state, timers) {
     state.timers = timers;
@@ -52,6 +34,7 @@ const mutations = {
 const actions = {
   async fetchTimers({ commit }) {
     const response = await allRunningTimers();
+    console.log(response);
     commit(SET_TIMERS, response.timers);
     commit(SET_INCLUDED, response.included);
   },
@@ -65,6 +48,9 @@ const actions = {
     };
     await create(payload);
     dispatch("fetchTimers");
+  },
+  setOptions({ commit }, options) {
+    commit(SET_OPTIONS, options);
   }
 };
 
@@ -81,8 +67,11 @@ const getters = {
       return result;
     });
   },
-  isRequiredOptionsEntered(state) {
+  isRequiredOptionsProvided(state) {
     return state.options.teamworkDomain && state.options.apiKey;
+  },
+  options(state) {
+    return state.options;
   }
 };
 
