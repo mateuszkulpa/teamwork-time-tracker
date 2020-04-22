@@ -34,7 +34,6 @@ const mutations = {
 const actions = {
   async fetchTimers({ commit }) {
     const response = await allRunningTimers();
-    console.log(response);
     commit(SET_TIMERS, response.timers);
     commit(SET_INCLUDED, response.included);
   },
