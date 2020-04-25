@@ -65,15 +65,11 @@
 <script>
 import IntervalEntry from "@/components/IntervalEntry";
 import EntryTotal from "@/components/EntryTotal";
-import {
-  resume,
-  pause,
-  remove,
-  update,
-  complete
-} from "@/services/timeTracking";
+import * as timeTrackingServices from "@/services/timeTracking";
 import debounce from "lodash.debounce";
-import { mapState } from "vuex";
+import store from "@/store";
+import { ref, computed } from "@vue/composition-api";
+import { DialogProgrammatic as Dialog } from "buefy";
 
 export default {
   components: { IntervalEntry, EntryTotal },
@@ -83,39 +79,49 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      collapsed: true
+  setup({ entry }) {
+    const collapsed = ref(true);
+
+    const pause = async () => {
+      await timeTrackingServices.pause(entry);
+      store.dispatch("fetchTimers");
     };
-  },
-  computed: {
-    ...mapState(["options"])
-  },
-  methods: {
-    async pause() {
-      await pause(this.entry);
-      this.$store.dispatch("fetchTimers");
-    },
-    async resume() {
-      await resume(this.entry);
-      this.$store.dispatch("fetchTimers");
-    },
-    async remove() {
-      this.$buefy.dialog.confirm({
+
+    const resume = async () => {
+      await timeTrackingServices.resume(entry);
+      store.dispatch("fetchTimers");
+    };
+
+    const remove = async () => {
+      Dialog.confirm({
         message: "Are you sure to delete this time entry?",
         onConfirm: async () => {
-          await remove(this.entry);
-          this.$store.dispatch("fetchTimers");
+          await timeTrackingServices.remove(entry);
+          store.dispatch("fetchTimers");
         }
       });
-    },
-    async complete() {
-      await complete(this.entry);
-      this.$store.dispatch("fetchTimers");
-    },
-    update: debounce(async function() {
-      update(this.entry);
-    }, 1000)
+    };
+
+    const complete = async () => {
+      await timeTrackingServices.complete(entry);
+      store.dispatch("fetchTimers");
+    };
+
+    const update = debounce(async function() {
+      timeTrackingServices.update(entry);
+    }, 1000);
+
+    const options = computed(() => store.getters.options);
+
+    return {
+      pause,
+      resume,
+      remove,
+      complete,
+      update,
+      collapsed,
+      options
+    };
   }
 };
 </script>
