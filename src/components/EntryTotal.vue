@@ -15,15 +15,13 @@ export default {
     }
   },
   setup(props) {
-    const { seconds, start, pause } = useTimer(
-      getTotalDurationForEntry(props.entry),
-      props.entry.running
-    );
+    const { seconds, start, pause, setSeconds } = useTimer(0);
 
     watch(
-      () => props.entry.running,
-      running => {
-        if (running) start();
+      () => props.entry,
+      entry => {
+        setSeconds(getTotalDurationForEntry(entry));
+        if (entry.running) start();
         else pause();
       }
     );

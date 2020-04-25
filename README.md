@@ -6,6 +6,7 @@ Simple app to tracking work time. It uses [TeamWork API](https://developer.teamw
 - [x] start, pause, complete, delete timers
 - [x] search tasks
 - [x] modify description of timers
+- [x] display total duration of current timers
 - [ ] recent tasks - allows to quick run timer on the recent tasks (e.g. from the last week)
 
 ## Challenges

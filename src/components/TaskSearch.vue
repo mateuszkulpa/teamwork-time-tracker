@@ -8,7 +8,6 @@
       @typing="search"
       :loading="isLoading"
       placeholder="Search task"
-      icon="magnify"
       clearable
       ref="autocomplete"
       @select="option => (selected = option)"
@@ -75,7 +74,6 @@ export default {
 <style lang="scss">
 .task-search {
   display: flex;
-  margin-bottom: 0.5 * $gap;
   &__input {
     flex: 1;
   }

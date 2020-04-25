@@ -1,7 +1,10 @@
 <template>
   <div class="tracker-container" ref="root">
     <div class="tracker">
-      <task-search />
+      <div class="tracker__header">
+        <task-search class="tracker__search" />
+        <time-summary class="tracker__summary" />
+      </div>
 
       <div
         class="has-text-danger has-text-centered"
@@ -39,6 +42,7 @@
 import Options from "@/components/Options";
 import TimeEntry from "@/components/TimeEntry";
 import TaskSearch from "@/components/TaskSearch";
+import TimeSummary from "@/components/TimeSummary";
 import { ModalProgrammatic } from "buefy";
 import { ref, computed } from "@vue/composition-api";
 import store from "@/store";
@@ -47,7 +51,8 @@ export default {
   name: "Tracker",
   components: {
     TimeEntry,
-    TaskSearch
+    TaskSearch,
+    TimeSummary
   },
   setup() {
     const root = ref(null);
@@ -100,11 +105,31 @@ export default {
     min-height: unset;
   }
 
+  &__header {
+    display: flex;
+    margin-bottom: 0.5 * $gap;
+  }
+
+  &__search {
+    flex: 1;
+  }
+
+  &__summary {
+    font-size: $size-4;
+    display: flex;
+    align-items: center;
+
+    @include mobile() {
+      font-size: $size-6;
+    }
+  }
+
   &__entries {
     position: relative;
     min-height: 3 * $gap;
     flex: 1;
   }
+
   &__footer {
     display: flex;
     justify-content: space-between;

@@ -20,6 +20,7 @@ export default function(initialSeconds, running) {
   const pause = () => {
     enabled.value = false;
   };
+  const setSeconds = input => (seconds.value = input);
 
-  return { seconds, start, pause };
+  return { seconds, start, pause, setSeconds };
 }

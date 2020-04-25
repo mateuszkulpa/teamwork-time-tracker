@@ -8,3 +8,14 @@ export function getTotalDurationForEntry(entry) {
     differenceInSeconds(new Date(), parseJSON(lastInterval.from))
   );
 }
+
+export function getTotalDurationForEntries(entries) {
+  return entries.reduce(
+    (acc, entry) => acc + getTotalDurationForEntry(entry),
+    0
+  );
+}
+
+export function isAnyEntryRunning(entries) {
+  return entries.some(entry => entry.running);
+}
