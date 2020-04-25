@@ -9,6 +9,9 @@ service.interceptors.request.use(
       throw new Error("No teamwork domain provided");
 
     config.baseURL = store.state.options.teamworkDomain;
+    if (store.getters.options.corsProxy) {
+      config.baseURL = store.getters.options.corsProxy + config.baseURL;
+    }
     config.headers = {
       Authorization: "Basic " + btoa(store.state.options.apiKey)
     };

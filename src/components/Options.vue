@@ -1,5 +1,8 @@
 <template>
   <section class="section has-background-white">
+    <b-field label="CORS proxy (optional)">
+      <b-input v-model="form.corsProxy"></b-input>
+    </b-field>
     <b-field label="Teamwork domain">
       <b-input v-model="form.teamworkDomain"></b-input>
     </b-field>

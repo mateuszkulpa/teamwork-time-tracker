@@ -10,6 +10,7 @@ const SET_INCLUDED = "SET_INCLUDED";
 const SET_OPTIONS = "SET_OPTIONS";
 const state = {
   options: {
+    corsProxy: "",
     teamworkDomain: "",
     apiKey: "",
     includeCompletedItems: true,
