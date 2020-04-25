@@ -18,9 +18,17 @@
         />
       </div>
 
-      <div>
+      <div class="tracker__footer">
         <b-button class="is-white" @click="openOptionsModal">
           <b-icon pack="fas" icon="cogs"></b-icon>
+        </b-button>
+        <b-button
+          tag="a"
+          target="_blank"
+          class="is-white"
+          href="https://github.com/mateuszkulpa/teamwork-time-tracker"
+        >
+          <b-icon pack="fab" icon="github"></b-icon>
         </b-button>
       </div>
     </div>
@@ -32,9 +40,9 @@ import Options from "@/components/Options";
 import TimeEntry from "@/components/TimeEntry";
 import TaskSearch from "@/components/TaskSearch";
 import { ModalProgrammatic } from "buefy";
-// import { mapGetters } from "vuex";
 import { ref, computed } from "@vue/composition-api";
 import store from "@/store";
+
 export default {
   name: "Tracker",
   components: {
@@ -81,6 +89,8 @@ export default {
   padding: 0.5 * $gap;
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
   @include desktop() {
     margin-top: $gap;
@@ -93,6 +103,12 @@ export default {
   &__entries {
     position: relative;
     min-height: 3 * $gap;
+    flex: 1;
+  }
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
   }
 }
 </style>
