@@ -13,11 +13,9 @@
       @select="option => (selected = option)"
     >
       <template slot-scope="props">
-        <div class="media">
-          <div class="media-content">
-            <small>{{ props.option.projectName }}</small> <br />
-            {{ props.option.name }}
-          </div>
+        <div>
+          <small>{{ props.option.projectName }}</small> <br />
+          {{ props.option.name }}
         </div>
       </template>
       <template slot="empty">No results found</template>

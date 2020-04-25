@@ -32,6 +32,11 @@ $family-primary: 'Quicksand', sans-serif;
 // dropdown 
 $dropdown-content-max-height: 75vh;
 
+// inputs
+$input-border-color: rgba($primary, 0.25);
+$input-shadow: none;
+$input-focus-box-shadow-size: 0;
+
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
