@@ -35,3 +35,11 @@ $dropdown-content-max-height: 75vh;
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
+
+.fullscreen-modal {
+    .modal-close {
+        &:before, &:after{
+            background: $black;
+        }
+    }
+}

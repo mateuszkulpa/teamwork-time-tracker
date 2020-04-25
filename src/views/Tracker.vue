@@ -15,16 +15,22 @@
 
       <div class="tracker__entries" ref="trackerEntries">
         <time-entry
-          v-for="(entry, index) in parsedTimers"
-          :key="index"
+          v-for="entry in parsedTimers"
+          :key="entry.id"
           :entry="entry"
         />
       </div>
 
       <div class="tracker__footer">
-        <b-button class="is-white" @click="openOptionsModal">
-          <b-icon pack="fas" icon="cogs"></b-icon>
-        </b-button>
+        <div>
+          <b-button class="is-white" @click="openOptionsModal">
+            <b-icon pack="fas" icon="cogs"></b-icon>
+          </b-button>
+          <b-button class="is-white" @click="openRecentTasksModal">
+            recent tasks
+          </b-button>
+        </div>
+
         <b-button
           tag="a"
           target="_blank"
@@ -40,6 +46,7 @@
 
 <script>
 import Options from "@/components/Options";
+import RecentTasks from "@/components/RecentTasks";
 import TimeEntry from "@/components/TimeEntry";
 import TaskSearch from "@/components/TaskSearch";
 import TimeSummary from "@/components/TimeSummary";
@@ -65,6 +72,14 @@ export default {
       });
     };
 
+    const openRecentTasksModal = () => {
+      ModalProgrammatic.open({
+        component: RecentTasks,
+        fullScreen: true,
+        customClass: "fullscreen-modal"
+      });
+    };
+
     const parsedTimers = computed(() => store.getters.parsedTimers);
     const isRequiredOptionsProvided = computed(
       () => store.getters.isRequiredOptionsProvided
@@ -73,6 +88,7 @@ export default {
     return {
       root,
       openOptionsModal,
+      openRecentTasksModal,
       parsedTimers,
       isRequiredOptionsProvided
     };

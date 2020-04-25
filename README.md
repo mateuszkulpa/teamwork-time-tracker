@@ -7,7 +7,7 @@ Simple app to tracking work time. It uses [TeamWork API](https://developer.teamw
 - [x] search tasks
 - [x] modify description of timers
 - [x] display total duration of current timers
-- [ ] recent tasks - allows to quick run timer on the recent tasks (e.g. from the last week)
+- [x] recent tasks - allows to quick run timer on the recent tasks (e.g. from the last week)
 
 ## Challenges
 CORS - if you want to use this application directly in your browser, you must enable cross-origin requests. The easiest way to do this is to build your proxy server. I used [CORS Anywhere](https://github.com/Rob--W/cors-anywhere) project. My proxy server is on heroku and is available [here](https://time-tracker-cors-anywhere.herokuapp.com/).
