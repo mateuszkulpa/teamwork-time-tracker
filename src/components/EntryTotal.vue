@@ -1,10 +1,12 @@
 <template>
-  <span>{{ totalSeconds | formatSeconds }}</span>
+  <span>{{ seconds | formatSeconds }}</span>
 </template>
 
 <script>
-import { differenceInSeconds, parseJSON } from "date-fns";
-let interval;
+import useTimer from "@/usables/useTimer";
+import { getTotalDurationForEntry } from "@/utils/entriesUtils";
+import { watch } from "@vue/composition-api";
+
 export default {
   props: {
     entry: {
@@ -12,28 +14,21 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      now: new Date()
-    };
-  },
-  created() {
-    interval = setInterval(() => {
-      if (this.entry.running) this.now = new Date();
-    }, 1000);
-  },
-  computed: {
-    totalSeconds() {
-      let total = this.entry.intervals.reduce((a, b) => a + b.duration, 0);
-      if (this.entry.running) {
-        const lastInterval = [...this.entry.intervals].pop();
-        total += differenceInSeconds(this.now, parseJSON(lastInterval.from));
+  setup(props) {
+    const { seconds, start, pause } = useTimer(
+      getTotalDurationForEntry(props.entry),
+      props.entry.running
+    );
+
+    watch(
+      () => props.entry.running,
+      running => {
+        if (running) start();
+        else pause();
       }
-      return total;
-    }
-  },
-  destroyed() {
-    clearInterval(interval);
+    );
+
+    return { seconds };
   }
 };
 </script>

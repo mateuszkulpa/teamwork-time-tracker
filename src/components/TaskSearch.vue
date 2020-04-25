@@ -37,31 +37,37 @@
 
 <script>
 import { searchTasks } from "@/services/search";
-import { ref } from "@vue/composition-api";
+import { reactive, toRefs } from "@vue/composition-api";
 import store from "@/store";
 
 export default {
   setup() {
-    const results = ref([]);
-    const isLoading = ref(false);
-    const selected = ref(null);
+    const state = reactive({
+      results: [],
+      isLoading: false,
+      selected: null
+    });
 
     const search = async query => {
       if (!query || query.length < 2) return;
       try {
-        isLoading.value = true;
-        results.value = (await searchTasks(query)).searchResult.tasks;
+        state.isLoading = true;
+        state.results = (await searchTasks(query)).searchResult.tasks;
       } finally {
-        isLoading.value = false;
+        state.isLoading = false;
       }
     };
 
     const createEntry = async () => {
-      store.dispatch("createEntry", selected);
-      selected.value = null;
+      store.dispatch("createEntry", state.selected);
+      state.selected = null;
     };
 
-    return { results, isLoading, selected, search, createEntry };
+    return {
+      ...toRefs(state),
+      search,
+      createEntry
+    };
   }
 };
 </script>

@@ -5,14 +5,14 @@
 
       <div
         class="has-text-danger has-text-centered"
-        v-if="!isRequiredOptionsProvided()"
+        v-if="!isRequiredOptionsProvided"
       >
         Provide TeamWork domain and API KEY
       </div>
 
       <div class="tracker__entries" ref="trackerEntries">
         <time-entry
-          v-for="(entry, index) in parsedTimers()"
+          v-for="(entry, index) in parsedTimers"
           :key="index"
           :entry="entry"
         />
@@ -32,10 +32,9 @@ import Options from "@/components/Options";
 import TimeEntry from "@/components/TimeEntry";
 import TaskSearch from "@/components/TaskSearch";
 import { ModalProgrammatic } from "buefy";
-import { mapGetters } from "vuex";
-import { ref } from "@vue/composition-api";
+// import { mapGetters } from "vuex";
+import { ref, computed } from "@vue/composition-api";
 import store from "@/store";
-
 export default {
   name: "Tracker",
   components: {
@@ -53,10 +52,16 @@ export default {
       });
     };
 
+    const parsedTimers = computed(() => store.getters.parsedTimers);
+    const isRequiredOptionsProvided = computed(
+      () => store.getters.isRequiredOptionsProvided
+    );
+
     return {
       root,
       openOptionsModal,
-      ...mapGetters(["parsedTimers", "isRequiredOptionsProvided"])
+      parsedTimers,
+      isRequiredOptionsProvided
     };
   }
 };
