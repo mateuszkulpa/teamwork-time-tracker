@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "@/store";
+import { ToastProgrammatic as Toast } from "buefy";
 
 const service = axios.create({});
 
@@ -27,6 +28,11 @@ service.interceptors.response.use(
     return response.data;
   },
   error => {
+    Toast.open({
+      message: error.message,
+      type: "is-danger",
+      position: "is-bottom"
+    });
     return Promise.reject(error);
   }
 );

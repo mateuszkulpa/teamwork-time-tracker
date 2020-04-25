@@ -1,18 +1,18 @@
 <template>
-  <div class="tracker-container">
+  <div class="tracker-container" ref="root">
     <div class="tracker">
       <task-search />
 
       <div
         class="has-text-danger has-text-centered"
-        v-if="!isRequiredOptionsProvided"
+        v-if="!isRequiredOptionsProvided()"
       >
         Provide TeamWork domain and API KEY
       </div>
 
       <div class="tracker__entries" ref="trackerEntries">
         <time-entry
-          v-for="(entry, index) in parsedTimers"
+          v-for="(entry, index) in parsedTimers()"
           :key="index"
           :entry="entry"
         />
@@ -33,6 +33,8 @@ import TimeEntry from "@/components/TimeEntry";
 import TaskSearch from "@/components/TaskSearch";
 import { ModalProgrammatic } from "buefy";
 import { mapGetters } from "vuex";
+import { ref } from "@vue/composition-api";
+import store from "@/store";
 
 export default {
   name: "Tracker",
@@ -40,24 +42,22 @@ export default {
     TimeEntry,
     TaskSearch
   },
-  methods: {
-    openOptionsModal() {
+  setup() {
+    const root = ref(null);
+
+    store.dispatch("fetchTimers");
+
+    const openOptionsModal = () => {
       ModalProgrammatic.open({
-        parent: this,
         component: Options
       });
-    }
-  },
-  async mounted() {
-    if (!this.isRequiredOptionsProvided) return;
-    const loadingComponent = this.$buefy.loading.open({
-      container: this.$refs.trackerEntries
-    });
-    await this.$store.dispatch("fetchTimers");
-    loadingComponent.close();
-  },
-  computed: {
-    ...mapGetters(["parsedTimers", "isRequiredOptionsProvided"])
+    };
+
+    return {
+      root,
+      openOptionsModal,
+      ...mapGetters(["parsedTimers", "isRequiredOptionsProvided"])
+    };
   }
 };
 </script>
